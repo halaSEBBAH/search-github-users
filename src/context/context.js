@@ -32,10 +32,13 @@ const GithubProvider  = ({children}) => {
         .catch((err) =>console.log(err));
     };
 
-    function toggleError({show, msg}){
+    function toggleError({show = false, msg}){
         setError({show,msg});
     }
 
+    const searchGithubUser = async(user) =>{
+        console.log('haha');
+    }
     
     useEffect( checkRequests,[]);
 
@@ -43,7 +46,7 @@ const GithubProvider  = ({children}) => {
     
 
     return (
-        <GithubContext.Provider value={{githubUser,repos,followers,requests}}>
+        <GithubContext.Provider value={{githubUser,repos,followers,requests,searchGithubUser,error }}>
             {children}
         </GithubContext.Provider>
 
@@ -52,3 +55,5 @@ const GithubProvider  = ({children}) => {
 }
 
 export {GithubProvider, GithubContext};
+
+
