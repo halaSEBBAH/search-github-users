@@ -5,33 +5,35 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 
 
 const Repos = () => {
-  const{repos} = React.useContext(GithubContext); 
-  console.log(repos);
 
-  const chartData = [
-    {
-      label: "java",
-      value: "4"
-    },
-    {
-      label: "python",
-      value: "4"
-    },
-    {
-      label: "react",
-      value: "2"
+  const{repos} = React.useContext(GithubContext);
+
+  let languages =  repos.reduce((total,item) =>{
+    const {language} = item;  // We can access item directly from json object / map 
+    if(!language) return total;
+    if(!total[language]) total[language] = {label:language,value:1} ;
+    else{
+      total[language] = {
+        ...total[language],
+        value:total[language].value+1};
     }
-  ];
+    return total;
+  },{});
+
+  languages = Object.values(languages);
 
   return (
     <section className='section' >
         <Wrapper className='section-center'>
-          <ExampleChart data={chartData}/>
+          <Pie3D data={languages}/>
+          {/*<ExampleChart data={chartData}/>*/}
         </Wrapper>
     </section>
-    
   );
+  
 };
+
+
 
 const Wrapper = styled.div`
   display: grid;
